@@ -4,7 +4,7 @@ This mod adds:
 ![the two stickers in this mod!](https://github.com/TheCodingZombie/PMCSBalatro/blob/main/repository/stick.png?raw=true)
 
 ## Features
-- **117** total new Jokers, based off of Paper Mario: Color Splash Enemy Cards!
+- **119** total new Jokers, based off of Paper Mario: Color Splash Enemy Cards!
 - A new rarity for Jokers, Thing! These Jokers provide powerful effects and are rarer than Rare cards!
 - New Edition, Replica!
 - New Statuses, Drained and Painted!
