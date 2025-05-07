@@ -1,7 +1,7 @@
 {
 	"id": "PMCS",
-	"name": "Paper Mario Mod",
-	"display_name": "PMCS",
+	"name": "ColorSplashed",
+	"display_name": "ColorSplashed",
 	"author": ["TheSocialZombie"],
 	"description": "A mod that adds Paper Mario themed Jokers into Balatro!",
 	"prefix": "pm",

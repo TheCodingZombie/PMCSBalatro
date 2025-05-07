@@ -212,8 +212,10 @@ G.FUNCS.cycle_update = function(args)
 end
 
 -- loads all joker files for use later
-local path = SMODS.current_mod.path..'src/'
-for _,v in pairs(NFS.getDirectoryItems(path)) do
+-- NOTE: i know this is probably a TERRIBLE way to make this work but it's the first thing i thought of
+local load_order = {'PMAchievements.lua', 'PMBosses.lua', 'PMChallenges.lua', 'PMMisc.lua', 'PMMusic.lua', 'PMTags.lua', 'PMVouchers.lua', 'PMJokers.lua', 'PMThings.lua', 'PMKoopalings.lua', 'PMMiscJokers.lua'}
+for i=1, #load_order do
+    local v = load_order[i]
     assert(SMODS.load_file('src/'..v))()
 end
 
@@ -826,9 +828,9 @@ local get_flush_ref = get_flush
 function get_flush(hand)
   local base = get_flush_ref(hand)
   local results = {}
-  local spiketop = next(find_joker('j_pm_spiketop'))
-  local morton = next(find_joker('j_pm_morton'))
-  local target = (next(find_joker('j_pm_plunger')) and 3) or (next(find_joker('Four Fingers')) and 4) or 5
+  local spiketop = next(SMODS.find_card('j_pm_spiketop'))
+  local morton = next(SMODS.find_card('j_pm_morton'))
+  local target = (next(SMODS.find_card('j_pm_plunger')) and 3) or (next(find_joker('Four Fingers')) and 4) or 5
   local suits = {
     ["Spades"] = 0,
     ["Hearts"] = 0,
@@ -916,8 +918,9 @@ local get_straight_ref = get_straight
 function get_straight(hand)
   local base = get_straight_ref(hand)
   local results = {}
-  local bloop = next(find_joker('j_pm_bloopking'))
-  local whomp = next(find_joker('j_pm_whompking'))
+  local bloop = next(SMODS.find_card('j_pm_bloopking'))
+  local cork = next(SMODS.find_card('j_pm_cork'))
+  local sledge = next(SMODS.find_card('j_pm_sledgebro'))
   local target = (next(find_joker('Four Fingers')) and 4) or 5
   
   if #hand > 5 or #hand < target then return base
@@ -931,7 +934,7 @@ function get_straight(hand)
     end
     table.insert(results, t)
     return results
-  elseif whomp then -- morton check
+  elseif cork then -- cork check
     local m = {}
     local stone_count = 0
     for i=1, #hand do
@@ -941,10 +944,97 @@ function get_straight(hand)
     if stone_count >= target then
         table.insert(results, m)
         return results 
-    else return base
+    else return base end
+  elseif sledge then
+    local t = {}
+    local IDS = {}
+    local stone_cards = {}
+    for i=1, #hand do
+
+        if hand[i].config.center == G.P_CENTERS.m_stone then
+            stone_cards[#stone_cards+1] = hand[i]
+        else 
+            local id = hand[i]:get_id()
+            if id > 1 and id < 15 then
+                if IDS[id] then
+                    IDS[id][#IDS[id]+1] = hand[i]
+                else
+                    IDS[id] = {hand[i]}
+                end
+            end
+        end
     end
+
+    local straight_length = 0
+    local straight = false
+    local can_skip = next(find_joker('Shortcut')) 
+    local skipped_rank = false
+    for j = 1, 14 do
+      if IDS[j == 1 and 14 or j] then
+        straight_length = straight_length + 1
+        skipped_rank = false
+        for k, v in ipairs(IDS[j == 1 and 14 or j]) do
+          t[#t+1] = v
+        end
+      elseif can_skip and not skipped_rank and j ~= 14 then
+          skipped_rank = true
+      elseif #stone_cards > 0 then
+          t[#t+1] = stone_cards[#stone_cards]
+          stone_cards[#stone_cards] = nil
+      else
+        straight_length = 0
+        skipped_rank = false
+        if not straight then t = {} end
+        if straight then break end
+      end
+      if straight_length >= (5 - (four_fingers and 1 or 0)) then straight = true end 
+    end
+    if not straight then return ret end
+    table.insert(ret, t)
+    return ret
+
   end
   return base
+end
+
+local get_X_same_ref = get_X_same
+function get_X_same(num, hand, or_more)
+    if next(SMODS.find_card('j_pm_sledgebro')) then
+        -- check first if all cards are stone
+        local exus = true
+        for k=1, #hand do
+            if hand[k].config.center ~= G.P_CENTERS.m_stone then
+                exus = false
+                break
+            end
+        end
+
+        if exus then
+            return hand
+        else
+            local vals = {}
+            for i = 1, SMODS.Rank.max_id.value do
+                vals[i] = {}
+            end
+            for i=#hand, 1, -1 do
+            local curr = {}
+            table.insert(curr, hand[i])
+            for j=1, #hand do
+                if (hand[i]:get_id() == hand[j]:get_id() and i ~= j) or (hand[j].config.center == G.P_CENTERS.m_stone) then
+                table.insert(curr, hand[j])
+                end
+            end
+            if or_more and (#curr >= num) or (#curr == num) then
+                vals[curr[1]:get_id()] = curr
+            end
+            end
+            local ret = {}
+            for i=#vals, 1, -1 do
+            if next(vals[i]) then table.insert(ret, vals[i]) end
+            end
+            return ret
+        end
+    else return get_X_same_ref(num, hand, or_more) end
 end
 
 -- replacing an SMOD function lol
@@ -1020,6 +1110,20 @@ function Card:get_chip_mult()
     return result
 end
 
+local is_suit_ref = Card.is_suit
+function Card:is_suit(suit, bypass_debuff, flush_calc)
+    if flush_calc then
+        if next(SMODS.find_card('j_pm_bloopking')) and self.config.center ~= G.P_CENTERS.c_base then
+            return true
+        else return is_suit_ref(self, suit, bypass_debuff, flush_calc) end
+    else
+        if self.debuff and not bypass_debuff then return end
+        if next(SMODS.find_card('j_pm_bloopking')) and self.config.center ~= G.P_CENTERS.c_base then
+            return true
+        else return is_suit_ref(self, suit, bypass_debuff, flush_calc) end
+    end
+end
+
 local set_debuff_ref = Card.set_debuff
 function Card:set_debuff(should_debuff)
     local result = set_debuff_ref(self, should_debuff)
@@ -1034,6 +1138,13 @@ function Card:set_debuff(should_debuff)
         end
     else return result
     end
+end
+
+function pm_in_array(haystack, needle)
+	for i=1, #haystack do
+		if haystack[i] == needle then return true end
+	end
+	return false
 end
 
 ----------------------------------------------

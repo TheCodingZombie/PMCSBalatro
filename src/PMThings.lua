@@ -781,39 +781,29 @@ SMODS.Joker{
         return { vars = {card.ability.extra.death and localize('pm_dead') or localize('pm_dry')} }
     end,
     calculate = function(self, card, context)
-
-        -- Boss Blind disable
-        if context.setting_blind and G.GAME.blind and G.GAME.blind.boss and not G.GAME.blind.disabled then
-            G.GAME.blind:disable()
-            play_sound('timpani')
-            card_eval_status_text(card, 'extra', nil, nil, nil, {message = localize('ph_boss_disabled')})
-        end
-
-        -- prevention of death
-        if context.end_of_round and not context.blueprint and context.game_over and (to_big(G.GAME.chips) / to_big(G.GAME.blind.chips)) >= to_big(0.5)and not card.ability.extra.death then
-            card.ability.extra.death = true -- death prevented, can no longer use this
-            G.E_MANAGER:add_event(Event({
-                func = function()
-                    G.hand_text_area.blind_chips:juice_up()
-                    G.hand_text_area.game_chips:juice_up()
-                    play_sound('tarot1')
-                    return true
+        if context.before and context.cardarea == G.jokers and not context.blueprint then
+            local active = false
+            for k, c in ipairs(context.scoring_hand) do
+                if not c:is_face() and c.config.center ~= G.P_CENTERS.m_stone then
+                    active = true
+                    c:set_ability(G.P_CENTERS.m_stone, nil, true)                       
+                    G.E_MANAGER:add_event(Event({
+                        func = function()
+                            c:juice_up()
+                            return true
+                        end
+                    }))
                 end
-            })) 
-            return {
-                message = localize('k_saved_ex'),
-                saved = true,
-                colour = G.C.RED
-            }
+            end
+        
+            if active then
+                return{
+                    message = localize("pm_upgraded"),
+                    card = card
+                }
+            end
         end
-    end,
-    add_to_deck = function(self, card, from_debuff)
-		if G.GAME.blind and G.GAME.blind.boss and not G.GAME.blind.disabled then
-            G.GAME.blind:disable()
-            play_sound('timpani')
-            card_eval_status_text(self, 'extra', nil, nil, nil, {message = localize('ph_boss_disabled')})
-        end
-	end
+    end
 }
 -- Washing Machine
 SMODS.Joker{
@@ -870,11 +860,11 @@ SMODS.Joker{
     cost = 9,
     blueprint_compat = true,
     pos = { x = 2, y = 2 },
-    config = { extra = {money = 1, xmult_gain = 0.25} },
+    config = { extra = {money = 3, xmult = 1.5} },
     loc_vars = function(self, info_queue, card)
         info_queue[#info_queue+1] = G.P_CENTERS.m_gold
         info_queue[#info_queue+1] = G.P_CENTERS.m_steel
-        return { vars = {card.ability.extra.money, card.ability.extra.xmult_gain} }
+        return { vars = {} }
     end,
     calculate = function(self, card, context)
         
@@ -882,8 +872,7 @@ SMODS.Joker{
         if context.before and context.cardarea == G.jokers and not context.blueprint then
             for k, c in ipairs(context.scoring_hand) do
                 if c.ability.name == 'Steel Card' then
-                    c:set_ability(G.P_CENTERS.m_gold, nil, true)
-                    ease_dollars(1)                       
+                    c:set_ability(G.P_CENTERS.m_gold, nil, true)               
                     G.E_MANAGER:add_event(Event({
                         func = function()
                             c:juice_up()
@@ -898,21 +887,30 @@ SMODS.Joker{
                             return true
                         end
                     }))
-                    G.E_MANAGER:add_event(Event({
-                        trigger = "after",
-                        delay = 0.5,
-                        func = function()
-                            c:juice_up()
-                            if c.config.center == G.P_CENTERS.m_steel then c.ability.h_x_mult = c.ability.h_x_mult + card.ability.extra.xmult_gain end
-                            return true
-                        end
-                    }))
                 end
             end
             return{
                 message = localize("pm_upgraded"),
                 card = card
             }
+        end
+
+        if context.individual and context.cardarea == G.play and context.other_card.ability.name == 'Steel Card' then
+            if not context.end_of_round and not context.before and not context.after and not context.other_card.debuff then
+                return {
+                    xmult = card.ability.extra.xmult,
+                    card = card
+              }
+            end
+        end
+
+        if context.individual and context.cardarea == G.play and context.other_card.ability.name == 'Gold Card' then
+            if not context.end_of_round and not context.before and not context.after and not context.other_card.debuff then
+                return {
+                    dollars = card.ability.extra.money,
+                    card = card
+                }
+            end
         end
     end
 }

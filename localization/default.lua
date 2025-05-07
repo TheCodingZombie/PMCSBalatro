@@ -488,7 +488,7 @@ return {
                     "{X:mult,C:white}X#1#{} Mult.",
                     "{C:green}#2# in #3#{} chance to {C:attention}flip{}",
                     "over a card when you play a hand",
-                    "{C:inactive}(Every card in hand has a separate chance){}",
+                    "{C:inactive}(each card has a separate chance){}",
                 },
             },
 
@@ -496,10 +496,10 @@ return {
               
                 name = "Spike",
                 text = { 
-                    "If hand is a {C:attention}#2#{},",
-                    "create a {C:attention}Moon{} card.",
-                    "{C:inactive}(Must have room){}",
-                    "{C:clubs}Clubs{} give {C:money}$#1#{} when scored",
+                    "If played hand contains a {C:attention}#1#{}",
+                    "create a {C:attention}Spin Jump{}",
+                    "If played hand contains a {C:attention}#2#{}",
+                    "create a {C:attention}Huge Line Jump{}",
                 },
             },
 
@@ -547,9 +547,7 @@ return {
                 name = "Fuzzy",
                 text = { 
                     "If {C:attention}first discard{} is {C:attention}one card{},",
-                    "{C:mult}destroy{} it and gain {C:mult}+Mult{}",
-                    "based on the card's base value.",
-                    "{C:inactive}(Currently {C:mult}+#1#{C:inactive} Mult){}",
+                    "{C:mult}destroy{} it and gain {C:blue}+#1#{} Hand",
                 },
             },
 
@@ -730,7 +728,7 @@ return {
                 name = "Pokey",
                 text = {
                     "{C:green}#1# in #2#{} chance to make each card {C:attention}#3#{}",
-                    "{C:mult}+#4#{} Mult per Wild Card if played hand is {C:attention}#5#{}",
+                    "{C:attention}Wild Cards{} give {C:mult}+#4#{} Mult",
                 },
             },
 
@@ -856,8 +854,8 @@ return {
               
                 name = "Sledge Bro",
                 text = { 
-                    "Gain {X:mult,C:white}+X#2#{} per {C:attention}Bro{} card you have.",
-                    "{C:inactive}(Currently {X:mult,C:white}X#1#{C:inactive} Mult){}",
+                    "{C:attention}Stone Cards{} can be",
+                    "used as {C:attention}any rank{}",
                 },
             },
 
@@ -866,7 +864,28 @@ return {
                 name = "Magikoopa",
                 text = { 
                     "If {C:attention}first discard{} is {C:attention}one card{},",
-                    "{C:mult}destroy{} it and gain a {C:purple}Tarot{} card",
+                    "{C:mult}destroy{} it and gain a {C:red}Battle Card{}",
+                },
+            },
+
+            -- Misc Jokers
+
+            j_pm_starpoints = {
+              
+                name = "Star Points",
+                text = { 
+                    "At the end of the {C:attention}Boss Blind{},",
+                    "Choose from {C:attention}3{} different bonuses",
+                },
+            },
+            
+            j_pm_battlejimbo = {
+
+                name = "Battlemancer",
+                text = { 
+                    "At the {C:attention}start of the round{},",
+                    "create a random {C:mult}Battle Card{}",
+                    "{C:inactive}(Must have room){}",
                 },
             },
 
@@ -921,7 +940,7 @@ return {
                 text = { 
                     "At the end of the {C:attention}Boss Blind{}", 
                     "gain a {C:dark_edition}Negative {C:attention}Ludwig Copy{}",
-                    "Gain {X:mult,C:white}+X#2#{} per {C:attention}Ludwig Copy{} you have.",
+                    "Gain {X:mult,C:white}+X#2#{} per {C:attention}Joker copy{} you have.",
                     "{C:inactive}(Currently {X:mult,C:white}X#1#{C:inactive} Mult){}",
                 },
                 unlock = {
@@ -934,7 +953,7 @@ return {
               
                 name = "Ludwig Copy",
                 text = { 
-                    "{C:inactive}Does... nothing?{}",
+                    "{C:inactive}#1#{}",
                 },
                 unlock = {
                     "Beat a {C:blue}clone-styled{}",
@@ -946,9 +965,9 @@ return {
               
                 name = "Wendy",
                 text = { 
-                    "Create a {C:dark_edition}Negative {C:purple}Jupiter{}", 
-                    "at the start of round",
-                    "Straights give {X:mult,C:white}+X#2#{}",
+                    "Create a {C:dark_edition}Negative {C:purple}Saturn{}", 
+                    "{C:attention}at the start of round",
+                    "Straights give {X:mult,C:white}+X#2#{} Mult",
                     "{C:inactive}(Currently {X:mult,C:white}X#1#{C:inactive} Mult){}",
                 },
                 unlock = {
@@ -961,9 +980,10 @@ return {
               
                 name = "Larry",
                 text = { 
-                    "At the {C:attention}start of round{}, create a random {C:attention}Joker{}",
-                    "If current number of Jokers is >= {C:attention}#1#{}, this",
-                    "becomes {C:dark_edition}Negative{}",
+                    "Create a {C:dark_edition}Negative {C:purple}Jupiter{}", 
+                    "{C:attention}at the start of round",
+                    "Flushes give {X:mult,C:white}+X#2#{} Mult",
+                    "{C:inactive}(Currently {X:mult,C:white}X#1#{C:inactive} Mult){}",
                 },
                 unlock = {
                     "Beat a {C:blue}blue-haired{}",
@@ -976,9 +996,8 @@ return {
                 name = "Lemmy",
                 text = { 
                     "{C:attention}Wild Cards{} cannot be {C:attention}debuffed{}",
-                    "When you play an enhanced card, make it a {C:attention}Wild Card{}",
-                    "All {C:attention}Wild Cards{} give {C:mult}+#1#{} Mult when played",
-                    "and permanently gain {C:mult}+#1#{} Mult when held in hand",
+                    "Scored enhanced cards become {C:attention}Wild Cards{}",
+                    "and gain {C:mult}+#1#{} Mult when held in hand",
                 },
                 unlock = {
                     "Beat a {C:pm_rgbled}wild{}",
@@ -1007,7 +1026,7 @@ return {
                 name = "Fire Extinguisher",
                 text = { 
                     "{C:red}Disable{} this if it's the leftmost {C:attention}Joker",
-                    "If you {C:red}destroy{} a card, make a {C:attention}copy{}", 
+                    "If a card is {C:red}destroyed{}, make a {C:attention}copy{}", 
                     "of it in your hand",
                 },
             },
@@ -1029,7 +1048,7 @@ return {
                 text = {
                     "{C:attention}Flushes{} can be played with 3 cards",
                     "This gains {C:mult}+#1#{} Mult per card",
-                    "not of the same suit in a {C:attention}Flush{}",
+                    "not of the same suit in a played {C:attention}Flush{}",
                     "{C:inactive}(Currently {C:mult}+#2#{C:inactive} Mult){}",
                 },
             },
@@ -1048,7 +1067,7 @@ return {
               
                 name = "Cat-O-Luck",
                 text = { 
-                    "{C:attention}Lucky Cards{} will always give {C:mult}+20{} Mult",
+                    "{C:attention}Lucky Cards{} always give {C:mult}+20{} Mult",
                     "{C:green}#1# in #2#{} chance to make each",
                     "played card {C:attention}Lucky{}",
                 },
@@ -1058,7 +1077,7 @@ return {
               
                 name = "Piggy Bank",
                 text = { 
-                    "Using money will increase the {C:attention}sell value{}",
+                    "Using money increases the {C:attention}sell value{}",
                     "of this Joker by {C:money}$#1#{}",
                 },
             },
@@ -1108,7 +1127,7 @@ return {
                 name = "Teapot",
                 text = { 
                     "If played hand contains a {C:attention}Flush{},",
-                    "{C:green}#1# in #2#{} chance to add {C:mult}+#3#{} Mult",
+                    "{C:green}#1# in #2#{} chance to gain {C:mult}+#3#{} Mult",
                     "and {C:red}shatter{} this card"
                 },
             },
@@ -1160,7 +1179,7 @@ return {
                 name = "Compass",
                 text = { 
                     "If {C:attention}played hand{} contains a {C:attention}Steel Card{},",
-                    "Convert the rank and suit of all {C:attention}played cards{}",
+                    "Convert the {C:attention}rank{} of all {C:attention}played cards{}",
                     "to that of the leftmost {C:attention}Steel Card{}",
                 },
             },
@@ -1169,10 +1188,9 @@ return {
               
                 name = "Cork",
                 text = { 
-                    "{C:red}Disables{} Boss Blinds and prevents",
-                    "{C:red}death{} if scored chips are",
-                    "at least {C:attention}50%{} of required chips",
-                    "{C:inactive}(#1#){}",
+                    "If hand consists of 5 {C:attention}Stone Cards{},",
+                    "it counts as a {C:attention}Straight{}.",
+                    "Played {C:attention}numbered cards{} become {C:attention}Stone{}",
                 },
             },
 
@@ -1181,7 +1199,7 @@ return {
                 name = "Washing Machine",
                 text = { 
                     "If {C:attention}played hand{} contains a {C:attention}Flush{},",
-                    "convert the {C:attention}rank{} of all played cards to {C:attention}#1#{}",
+                    "convert the {C:attention}rank{} of all {C:attention}played cards{} to {C:attention}#1#{}",
                     "{C:inactive}(Rank chosen upon creation){}",
                 },
             },
@@ -1190,9 +1208,9 @@ return {
               
                 name = "Lightbulb",
                 text = { 
-                    "{C:attention}Steel Cards{} become {C:money}Gold{} when played",
-                    "and give {C:money}$#1#{}. {C:money}Gold Cards{} become {C:attention}Steel{}",
-                    "and gain {X:mult,C:white}+X#2#{} Mult when held in hand",
+                    "{C:attention}Steel Cards{} become {C:attention}Gold Cards{} when played",
+                    "{C:attention}Gold Cards{} become {C:attention}Steel Cards{} when played",
+                    "{C:attention}Steel and Gold Cards{} give their effects when played",
                 },
             },
 
@@ -1200,8 +1218,8 @@ return {
               
                 name = "Salt and Pepper",
                 text = { 
-                    "Played {C:spades}#1#{} cards give {C:mult}+#5#{} Mult",
-                    "Played {C:attention}Stone Cards{} give {C:chips}+#4#{} Chips",
+                    "Played {C:spades}#1#{} cards give this Joker {C:mult}+#5#{} Mult",
+                    "Played {C:attention}Stone Cards{} give this Joker {C:chips}+#4#{} Chips",
                     "{C:inactive}(Currently {C:chips}+#2#{C:inactive} Chips and {C:mult}+#3#{C:inactive} Mult){}",
                 },
             },
@@ -1210,7 +1228,7 @@ return {
               
                 name = "Charcoal Grill",
                 text = { 
-                    "If played hand has a max of {C:attention}#1#{} cards,",
+                    "If played hand contains up to {C:attention}#1#{} cards,",
                     "increase the {C:attention}ranks{} of each played card.", 
                     "If a card is an {C:attention}Ace{},",
                     "make it a {C:attention}Stone Card{} instead",
@@ -1371,8 +1389,7 @@ return {
                 name = "Gooper Blooper",
                 text = { 
                     "Any combo of {C:attention}numbered cards{} counts as a {C:attention}Straight{}",
-                    "Playing Straights gives {X:mult,C:white}+X#2#{} Mult",
-                    "{C:inactive}(Currently {X:mult,C:white}X#1#{C:inactive} Mult){}",
+                    "{C:attention}Enhanced Cards{} count as {C:attention}any suit{}",
                 },
                 unlock = {
                     "Beat an {C:purple}inky{}",
@@ -1396,9 +1413,8 @@ return {
             j_pm_whompking = {
                 name = "King Whomp",
                 text = { 
-                    "If hand consists of 5 {C:attention}Stone Cards{},",
-                    "it counts as a {C:attention}Straight{}.",
-                    "Played {C:attention}numbered cards{} become {C:attention}Stone{}",
+                    "{C:attention}Stone Cards{} count as {C:attention}any suit{}",
+                    "Played {C:attention}Stone Cards{} give {X:mult,C:white}X#1#{} Mult",
                 },
                 unlock = {
                     "Beat a Stone",
@@ -1438,7 +1454,7 @@ return {
               
                 name = "Bowser Jr.",
                 text = { 
-                    "Randomly grants played hands a random",
+                    "Randomly grants played cards a random",
                     "{C:attention}enhancement, edition, or seal{}",
                     "{s:0.8,C:inactive}(chances for each are independent and cannot be modified){}",
                 },
@@ -1616,42 +1632,42 @@ return {
                 name = "Basic Pack",
                 text = {
                     "Choose {C:attention}#1#{} of up to",
-					"{C:attention}#2#{C:purple} Battle{} Cards",
+					"{C:attention}#2#{C:red} Battle{} Cards",
                 }
             },
             p_pm_bc_basic_2 = {
                 name = "Basic Pack",
                 text = {
                     "Choose {C:attention}#1#{} of up to",
-					"{C:attention}#2#{C:purple} Battle{} Cards",
+					"{C:attention}#2#{C:red} Battle{} Cards",
                 }
             },
             p_pm_bc_big_1 = {
                 name = "Big Pack",
                 text = {
                     "Choose {C:attention}#1#{} of up to",
-					"{C:attention}#2#{C:purple} Battle{} Cards",
+					"{C:attention}#2#{C:red} Battle{} Cards",
                 }
             },
             p_pm_bc_big_2 = {
                 name = "Big Pack",
                 text = {
                     "Choose {C:attention}#1#{} of up to",
-					"{C:attention}#2#{C:purple} Battle{} Cards",
+					"{C:attention}#2#{C:red} Battle{} Cards",
                 }
             },
             p_pm_bc_huge_1 = {
                 name = "Huge Pack",
                 text = {
                     "Choose {C:attention}#1#{} of up to",
-					"{C:attention}#2#{C:purple} Battle{} Cards",
+					"{C:attention}#2#{C:red} Battle{} Cards",
                 }
             },
             p_pm_bc_huge_2 = {
                 name = "Huge Pack",
                 text = {
                     "Choose {C:attention}#1#{} of up to",
-					"{C:attention}#2#{C:purple} Battle{} Cards",
+					"{C:attention}#2#{C:red} Battle{} Cards",
                 }
             },
             
@@ -1664,13 +1680,6 @@ return {
                     "Create a {C:blue}Planet{} card for final played {C:attention}poker hand{}",
                     "of round if {C:attention}held{} in hand {C:inactive}(Must have room){}",
                     "Create a {C:purple}Tarot{} when discarded {C:inactive}(Must have room){}",
-                }
-            },
-
-            --extra descriptions
-            pm_extra_mult = {
-                text = {
-                    "{C:mult}+#1#{} bonus Mult",
                 }
             },
         },
@@ -1825,6 +1834,27 @@ return {
                 }
             },
 
+            -- level up bonuses
+            c_pm_hpbonus = {
+                name = "HP Up",
+                text = {
+                    "{C:blue}+#1#{} Hand"
+                }
+            },
+
+            c_pm_fpbonus = {
+                name = "FP Up",
+                text = {
+                    "{C:red}+#1#{} Discard"
+                }
+            },
+
+            c_pm_bpbonus = {
+                name = "BP Up",
+                text = {
+                    "{C:dark_edition}+#1#{} Joker Slot"
+                }
+            },
         },
         Voucher={
             v_pm_copycat = {
@@ -2462,6 +2492,9 @@ return {
             pm_KO = "OHKO!",
             pm_easter_egg = "Lucky!",
             pm_exponential = "^1.25 Mult",
+            pm_levelup = "+1 Level",
+            pm_levelup_ex = "Bonus Redeemed!",
+            pm_battle_plus = "+1 Battle Card",
 
             -- Dry Bones
             pm_chips = "Chips",
@@ -2470,6 +2503,10 @@ return {
             pm_xmult = "X",
             pm_dry = "1-UP Active!",
             pm_dead = "Death Prevented!",
+
+            -- Ludwig Copy Secret Effect
+            pm_nothing = "Does... nothing?",
+            pm_ludwigsecret = "Sell this to gain a copy of Ludwig, destroying 2 other Ludwig Copies",
 
             -- Rarities
             k_pm_thing = "Thing",

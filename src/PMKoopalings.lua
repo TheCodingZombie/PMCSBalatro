@@ -184,15 +184,15 @@ SMODS.Joker{
     blueprint_compat = true,
     pos = { x = 2, y = 1 },
     soul_pos = { x = 3, y = 1 },
-    config = { extra = {Xmult = 1.0, Xmult_gain = 1.0} },
+    config = { extra = {Xmult = 1.0, copy_gain = 0.5} },
     loc_vars = function(self, info_queue, card)
         info_queue[#info_queue+1] = G.P_CENTERS.j_pm_ludwigcopy
-        return { vars = {card.ability.extra.Xmult, card.ability.extra.Xmult_gain} }
+        return { vars = {card.ability.extra.Xmult, card.ability.extra.copy_gain} }
     end,
     calculate = function(self, card, context)
 
         -- at the end of a boss blind, gain a Ludwig Copy
-        if context.end_of_round and G.GAME.blind.boss then
+        if context.end_of_round and G.GAME.blind.boss and context.cardarea == G.jokers then
             local t = {
                 set = 'Joker',
                 area = G.jokers,
@@ -215,15 +215,15 @@ SMODS.Joker{
     update = function(self, card, dt)
         if G.STAGE == G.STAGES.RUN then
             local bro_count = 0
+            local t = {}
             for i = 1, #G.jokers.cards do
                 local j = G.jokers.cards[i]
-                if string.find(j.config.center.key, 'j_pm_ludwigcopy') and card ~= j then
-                    bro_count = bro_count + 1
-                end
+                if pm_in_array(t, j.config.center.key) or string.find(j.config.center.key, "j_pm_ludwigcopy") then bro_count = bro_count + 1
+                else t[#t+1] = j.config.center.key end
             end
 
             if bro_count > 0 then
-                card.ability.extra.Xmult = card.ability.extra.Xmult_gain * bro_count
+                card.ability.extra.Xmult = 1 + card.ability.extra.copy_gain * bro_count
             end
         else
             card.ability.extra.Xmult = 1.0
@@ -249,12 +249,48 @@ SMODS.Joker{
     blueprint_compat = false,
     pos = { x = 2, y = 1 },
     soul_pos = { x = 3, y = 1 },
-    config = { extra = {} },
+    config = { extra = {count = 0} },
     loc_vars = function(self, info_queue, card)
-        return { vars = {} }
+        if card.ability.extra.count > 2 then info_queue[#info_queue+1] = G.P_CENTERS.j_pm_ludwigcopy end
+        return { vars = {(card.ability.extra.count <= 2) and localize('pm_nothing') or localize('pm_ludwigsecret')} }
     end,
     calculate = function(self, card, context)
+        if not context.blueprint and not context.selling_self then
+            local eval = function() return card.ability.extra.count > 2 and not G.RESET_JIGGLES end
+            juice_card_until(card, eval, true)
+        end
 
+        if context.selling_self then
+            if card.ability.extra.count > 2 then
+                local x_count = 0
+                for i=1, #G.jokers.cards do
+                    local j = G.jokers.cards[i]
+                    if string.find(j.config.center.key, "j_pm_ludwigcopy") and j ~= card and x_count < 3 then j:start_dissolve(); ease_dollars(1); x_count = x_count + 1 end 
+                end
+
+            local t = {
+                key = 'j_pm_ludwig',
+                edition = {negative = true},
+            }
+            SMODS.add_card(t)
+            
+            card_eval_status_text(context.blueprint_card or card, 'extra', nil, nil, nil, {message = localize('k_plus_joker'), colour = G.C.BLUE}) 
+            
+            end
+        end
+
+    end,
+    update = function(self, card, dt)
+        if G.STAGE == G.STAGES.RUN then
+            local count = 0
+            for i=1, #G.jokers.cards do
+                local j = G.jokers.cards[i]
+                if string.find(j.config.center.key, "j_pm_ludwigcopy") then count = count + 1 end 
+            end
+            card.ability.extra.count = count
+        else
+            card.ability.extra.count = 0
+        end
     end,
     check_for_unlock = function(self, args)
         if args.type == "boss_blind_win" then
@@ -278,17 +314,17 @@ SMODS.Joker{
     soul_pos = { x = 1, y = 2 },
     config = { extra = {Xmult = 1.0, Xmult_gain = 0.1} },
     loc_vars = function(self, info_queue, card)
-        info_queue[#info_queue+1] = G.P_CENTERS.c_jupiter
+        info_queue[#info_queue+1] = G.P_CENTERS.c_saturn
         return { vars = {card.ability.extra.Xmult, card.ability.extra.Xmult_gain} }
     end,
     calculate = function(self, card, context)
 
-        -- Getting a Negative Jupiter Card when you start a round
+        -- Getting a Negative Saturn Card when you start a round
         if context.first_hand_drawn then
             if #G.consumeables.cards < G.consumeables.config.card_limit then
                 local t = {
                     area = G.consumeables,
-                    key = 'c_jupiter'
+                    key = 'c_saturn'
                 }
                 SMODS.add_card(t)
                 card:juice_up()
@@ -334,29 +370,42 @@ SMODS.Joker{
     blueprint_compat = true,
     pos = { x = 2, y = 2 },
     soul_pos = { x = 3, y = 2 },
-    config = { extra = {joker_count = 5} },
+    config = { extra = {Xmult = 1.0, Xmult_gain = 0.1} },
     loc_vars = function(self, info_queue, card)
-        return { vars = {card.ability.extra.joker_count} }
+        info_queue[#info_queue+1] = G.P_CENTERS.c_jupiter
+        return { vars = {card.ability.extra.Xmult, card.ability.extra.Xmult_gain} }
     end,
     calculate = function(self, card, context)
 
-        if context.setting_blind and not context.blueprint then
-            if #G.jokers.cards >= card.ability.extra.joker_count then
-                local edition = {negative = true}
-                card:set_edition(edition, true)
+        -- Getting a Negative Jupiter Card when you start a round
+        if context.first_hand_drawn then
+            if #G.consumeables.cards < G.consumeables.config.card_limit then
+                local t = {
+                    area = G.consumeables,
+                    key = 'c_jupiter'
+                }
+                SMODS.add_card(t)
+                card:juice_up()
+                card_eval_status_text(_card, 'extra', nil, nil, nil, {message = localize('k_plus_planet'), colour = G.C.SECONDARY_SET.Planet})
             end
-            card_eval_status_text(context.blueprint_card or card, 'extra', nil, nil, nil, {message = localize('pm_upgraded'), colour = G.C.PURPLE}) 
         end
 
-        if context.setting_blind and not (context.blueprint_card or self).getting_sliced and #G.jokers.cards + G.GAME.joker_buffer < G.jokers.config.card_limit then
-            local jokers_to_create = math.min(1, G.jokers.config.card_limit - (#G.jokers.cards + G.GAME.joker_buffer))
-            local t = {
-                set = 'Joker',
-                area = G.jokers,
+        if context.before and not context.blueprint then
+            if string.find(context.scoring_name, "Flush") then
+                card.ability.extra.Xmult = card.ability.extra.Xmult + card.ability.extra.Xmult_gain
+                return {
+                    colour = G.C.MULT,
+                    message = localize("pm_upgraded"),
+                    card = card
+                }
+            end
+        end
+
+        if context.joker_main then
+            return {
+                xmult = card.ability.extra.Xmult,
+                card = card
             }
-            if jokers_to_create then SMODS.add_card(t) end
-            
-            card_eval_status_text(context.blueprint_card or card, 'extra', nil, nil, nil, {message = localize('k_plus_joker'), colour = G.C.BLUE}) 
         end
     end,
     check_for_unlock = function(self, args)
@@ -405,15 +454,6 @@ SMODS.Joker{
                 return{
                     message = localize('pm_wild'),
                     colour = G.C.PURPLE
-                }
-            end
-        end
-
-        if context.individual and context.cardarea == G.play and context.other_card.ability.name == 'Wild Card' then
-            if not context.end_of_round and not context.before and not context.after and not context.other_card.debuff then
-                return {
-                    mult = card.ability.extra.mult,
-                    card = card
                 }
             end
         end
@@ -835,28 +875,11 @@ SMODS.Joker{
     unlocked = false,
     cost = 20,
     blueprint_compat = true,
-    config = { extra = {xmult = 1, xmult_gain = 0.1} },
+    config = { extra = {} },
     loc_vars = function(self, info_queue, card)
-        return { vars = {card.ability.extra.xmult, card.ability.extra.xmult_gain} }
+        return { vars = {} }
     end,
     calculate = function(self, card, context)
-        if context.before and not context.blueprint then
-            if string.find(context.scoring_name, "Straight") then
-                card.ability.extra.xmult = card.ability.extra.xmult + card.ability.extra.xmult_gain
-                return {
-                    colour = G.C.MULT,
-                    message = localize("pm_upgraded"),
-                    card = card
-                }
-            end
-        end
-
-        if context.joker_main then
-            return {
-                xmult = card.ability.extra.xmult,
-                card = card
-            }
-		end
     end,
     check_for_unlock = function(self, args)
         if args.type == "boss_blind_win" then
@@ -924,34 +947,20 @@ SMODS.Joker{
     unlocked = false,
     cost = 20,
     blueprint_compat = true,
-    config = { extra = {} },
+    config = { extra = {xmult = 1.5} },
     loc_vars = function(self, info_queue, card)
         info_queue[#info_queue+1] = G.P_CENTERS.m_stone
-        return { vars = {} }
+        return { vars = {card.ability.extra.xmult} }
     end,
     calculate = function(self, card, context)
-        if context.before and context.cardarea == G.jokers and not context.blueprint then
-            local active = false
-            for k, c in ipairs(context.scoring_hand) do
-                if not c:is_face() and c.config.center ~= G.P_CENTERS.m_stone then
-                    active = true
-                    c:set_ability(G.P_CENTERS.m_stone, nil, true)                       
-                    G.E_MANAGER:add_event(Event({
-                        func = function()
-                            c:juice_up()
-                            return true
-                        end
-                    }))
-                end
+        if context.individual and context.cardarea == G.play and context.other_card.config.center == G.P_CENTERS.m_stone then
+            if not context.end_of_round and not context.before and not context.after and not context.other_card.debuff then
+                return {
+                    xmult = card.ability.extra.xmult,
+                    card = context.other_card
+              }
             end
-        
-            if active then
-                return{
-                    message = localize("pm_upgraded"),
-                    card = card
-                }
-            end
-        end
+        end 
     end,
     check_for_unlock = function(self, args)
         if args.type == "boss_blind_win" then

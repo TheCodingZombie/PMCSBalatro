@@ -686,7 +686,7 @@ SMODS.Consumable{
     atlas = 'BattleCards',
     rarity = 'pm_common',
     pos = { x = 2, y = 1 },
-    config = {extra = {odds = 3, selection_limit = 1, increase = 1}},
+    config = {extra = {odds = 3, selection_limit = 1, increase = 1, jump = true}},
     cost = 1,
     discovered = false,
     loc_vars = function(self, info_queue, card)
@@ -747,8 +747,8 @@ SMODS.Consumable{
     atlas = 'BattleCards',
     rarity = 'pm_common',
     pos = { x = 3, y = 1 },
-    config = {extra = {count = 3, copy = 'c_pm_wojump'}},
-    cost = 1,
+    config = {extra = {count = 3, copy = 'c_pm_wojump', jump = true}},
+    cost = 3,
     discovered = false,
     loc_vars = function(self, info_queue, card)
         info_queue[#info_queue+1] = G.P_CENTERS.c_pm_wojump
@@ -777,8 +777,8 @@ SMODS.Consumable{
     atlas = 'BattleCards',
     rarity = 'pm_uncommon',
     pos = { x = 4, y = 1 },
-    config = {extra = {count = 5, copy = 'c_pm_wojump'}},
-    cost = 1,
+    config = {extra = {count = 5, copy = 'c_pm_wojump', jump = true}},
+    cost = 5,
     discovered = false,
     loc_vars = function(self, info_queue, card)
         info_queue[#info_queue+1] = G.P_CENTERS.c_pm_wojump
@@ -807,7 +807,7 @@ SMODS.Consumable{
     atlas = 'BattleCards',
     rarity = 'pm_common',
     pos = { x = 5, y = 1 },
-    config = {extra = {odds = 3, selection_limit = 1, increase = 1, extra_use = false, uses = 0}},
+    config = {extra = {odds = 3, selection_limit = 1, increase = 1, extra_use = false, uses = 0, jump = true}},
     cost = 3,
     discovered = false,
     loc_vars = function(self, info_queue, card)
@@ -877,8 +877,8 @@ SMODS.Consumable{
     atlas = 'BattleCards',
     rarity = 'pm_uncommon',
     pos = { x = 6, y = 1 },
-    config = {extra = {count = 2, copy = 'c_pm_jump'}},
-    cost = 1,
+    config = {extra = {count = 2, copy = 'c_pm_jump', jump = true}},
+    cost = 5,
     discovered = false,
     loc_vars = function(self, info_queue, card)
         info_queue[#info_queue+1] = G.P_CENTERS.c_pm_jump
@@ -908,8 +908,8 @@ SMODS.Consumable{
     atlas = 'BattleCards',
     rarity = 'pm_uncommon',
     pos = { x = 7, y = 1 },
-    config = {extra = {count = 3, copy = 'c_pm_jump'}},
-    cost = 1,
+    config = {extra = {count = 3, copy = 'c_pm_jump', jump = true}},
+    cost = 7,
     discovered = false,
     loc_vars = function(self, info_queue, card)
         info_queue[#info_queue+1] = G.P_CENTERS.c_pm_jump
@@ -938,7 +938,7 @@ SMODS.Consumable{
     atlas = 'BattleCards',
     rarity = 'pm_uncommon',
     pos = { x = 8, y = 1 },
-    config = {extra = {odds = 2, selection_limit = 1, increase = 2, extra_use = false, uses = 0}},
+    config = {extra = {odds = 2, selection_limit = 1, increase = 2, extra_use = false, uses = 0, jump = true}},
     cost = 5,
     discovered = false,
     loc_vars = function(self, info_queue, card)
@@ -1007,8 +1007,8 @@ SMODS.Consumable{
     atlas = 'BattleCards',
     rarity = 'pm_rare',
     pos = { x = 9, y = 1 },
-    config = {extra = {count = 2, copy = 'c_pm_bigjump'}},
-    cost = 1,
+    config = {extra = {count = 2, copy = 'c_pm_bigjump', jump = true}},
+    cost = 8,
     discovered = false,
     loc_vars = function(self, info_queue, card)
         info_queue[#info_queue+1] = G.P_CENTERS.c_pm_bigjump
@@ -1037,7 +1037,7 @@ SMODS.Consumable{
     atlas = 'BattleCards',
     rarity = 'pm_rare',
     pos = { x = 0, y = 2 },
-    config = {extra = {selection_limit = 1, increase = 3}},
+    config = {extra = {selection_limit = 1, increase = 3, jump = true}},
     cost = 7,
     discovered = false,
     loc_vars = function(self, info_queue, card)
@@ -1078,7 +1078,7 @@ SMODS.Consumable{
     atlas = 'BattleCards',
     rarity = 'pm_uncommon',
     pos = { x = 1, y = 2 },
-    config = {extra = {selection_limit = 3}},
+    config = {extra = {selection_limit = 3, jump = true}},
     cost = 3,
     discovered = false,
     loc_vars = function(self, info_queue, card)
@@ -1162,7 +1162,7 @@ SMODS.Consumable{
     atlas = 'BattleCards',
     rarity = 'pm_uncommon',
     pos = { x = 2, y = 2 },
-    config = {extra = {selection_limit = 4}},
+    config = {extra = {selection_limit = 4, jump = true}},
     cost = 5,
     discovered = false,
     loc_vars = function(self, info_queue, card)
@@ -1246,7 +1246,7 @@ SMODS.Consumable{
     atlas = 'BattleCards',
     rarity = 'pm_rare',
     pos = { x = 3, y = 2 },
-    config = {extra = {selection_limit = 5}},
+    config = {extra = {selection_limit = 5, jump = true}},
     cost = 8,
     discovered = false,
     loc_vars = function(self, info_queue, card)
@@ -1330,8 +1330,8 @@ SMODS.Consumable{
     atlas = 'BattleCards',
     rarity = 'pm_common',
     pos = { x = 4, y = 2 },
-    config = {extra = {selection_limit = 1, chip_gain = 15, uses = 0}},
-    cost = 7,
+    config = {extra = {selection_limit = 1, chip_gain = 15, uses = 0, jump = true}},
+    cost = 6,
     discovered = false,
     loc_vars = function(self, info_queue, card)
 		return { vars = {card.ability.extra.selection_limit, card.ability.extra.chip_gain, 5-card.ability.extra.uses} }
@@ -1375,8 +1375,8 @@ SMODS.Consumable{
     atlas = 'BattleCards',
     rarity = 'pm_uncommon',
     pos = { x = 5, y = 2 },
-    config = {extra = {count = 2, copy = 'c_pm_hopslipper'}},
-    cost = 1,
+    config = {extra = {count = 2, copy = 'c_pm_hopslipper', jump = true}},
+    cost = 7,
     discovered = false,
     loc_vars = function(self, info_queue, card)
         info_queue[#info_queue+1] = G.P_CENTERS.c_pm_hopslipper
@@ -1405,8 +1405,8 @@ SMODS.Consumable{
     atlas = 'BattleCards',
     rarity = 'pm_uncommon',
     pos = { x = 6, y = 2 },
-    config = {extra = {count = 3, copy = 'c_pm_hopslipper'}},
-    cost = 1,
+    config = {extra = {count = 3, copy = 'c_pm_hopslipper', jump = true}},
+    cost = 8,
     discovered = false,
     loc_vars = function(self, info_queue, card)
         info_queue[#info_queue+1] = G.P_CENTERS.c_pm_hopslipper
@@ -1435,7 +1435,7 @@ SMODS.Consumable{
     atlas = 'BattleCards',
     rarity = 'pm_uncommon',
     pos = { x = 7, y = 2 },
-    config = {extra = {selection_limit = 1, chip_gain = 50, uses = 0}},
+    config = {extra = {selection_limit = 1, chip_gain = 50, uses = 0, jump = true}},
     cost = 7,
     discovered = false,
     loc_vars = function(self, info_queue, card)
@@ -1480,7 +1480,7 @@ SMODS.Consumable{
     atlas = 'BattleCards',
     rarity = 'pm_rare',
     pos = { x = 8, y = 2 },
-    config = {extra = {selection_limit = 1, xchip_gain = 0.5, uses = 0}},
+    config = {extra = {selection_limit = 1, xchip_gain = 0.5, uses = 0, jump = true}},
     cost = 7,
     discovered = false,
     loc_vars = function(self, info_queue, card)
@@ -1525,7 +1525,7 @@ SMODS.Consumable{
     atlas = 'BattleCards',
     rarity = 'pm_common',
     pos = { x = 9, y = 2 },
-    config = {extra = {selection_limit = 3}},
+    config = {extra = {selection_limit = 3, jump = true}},
     cost = 3,
     discovered = false,
     loc_vars = function(self, info_queue, card)
@@ -1540,7 +1540,10 @@ SMODS.Consumable{
     end,
     use = function(self, card, area, copier)
         if G.hand.highlighted and #G.hand.highlighted >= 2 and #G.hand.highlighted <= card.ability.extra.selection_limit then
-            local left = G.hand.highlighted[1].base.suit     
+            local leftmost = G.hand.highlighted[1]
+            for i=1, #G.hand.highlighted do if G.hand.highlighted[i].T.x < leftmost.T.x then leftmost = G.hand.highlighted[i] end end
+            
+            local left = leftmost.base.suit     
             G.E_MANAGER:add_event(Event({
                 func = function()
                     for i=1, #G.hand.highlighted do
@@ -1573,8 +1576,8 @@ SMODS.Consumable{
     atlas = 'BattleCards',
     rarity = 'pm_uncommon',
     pos = { x = 0, y = 3 },
-    config = {extra = {count = 2, copy = 'c_pm_ironjump'}},
-    cost = 1,
+    config = {extra = {count = 2, copy = 'c_pm_ironjump', jump = true}},
+    cost = 5,
     discovered = false,
     loc_vars = function(self, info_queue, card)
         info_queue[#info_queue+1] = G.P_CENTERS.c_pm_ironjump
@@ -1603,7 +1606,7 @@ SMODS.Consumable{
     atlas = 'BattleCards',
     rarity = 'pm_rare',
     pos = { x = 1, y = 3 },
-    config = {extra = {count = 3, copy = 'c_pm_ironjump'}},
+    config = {extra = {count = 3, copy = 'c_pm_ironjump', jump = true}},
     cost = 1,
     discovered = false,
     loc_vars = function(self, info_queue, card)
@@ -1633,7 +1636,7 @@ SMODS.Consumable{
     atlas = 'BattleCards',
     rarity = 'pm_uncommon',
     pos = { x = 2, y = 3 },
-    config = {extra = {selection_limit = 5}},
+    config = {extra = {selection_limit = 5, jump = true}},
     cost = 5,
     discovered = false,
     loc_vars = function(self, info_queue, card)
@@ -1648,7 +1651,10 @@ SMODS.Consumable{
     end,
     use = function(self, card, area, copier)
         if G.hand.highlighted and #G.hand.highlighted >= 2 and #G.hand.highlighted <= card.ability.extra.selection_limit then
-            local left = G.hand.highlighted[1].base.suit     
+            local leftmost = G.hand.highlighted[1]
+            for i=1, #G.hand.highlighted do if G.hand.highlighted[i].T.x < leftmost.T.x then leftmost = G.hand.highlighted[i] end end
+            
+            local left = leftmost.base.suit     
             G.E_MANAGER:add_event(Event({
                 func = function()
                     for i=1, #G.hand.highlighted do
@@ -1681,7 +1687,7 @@ SMODS.Consumable{
     atlas = 'BattleCards',
     rarity = 'pm_rare',
     pos = { x = 3, y = 3 },
-    config = {extra = {}},
+    config = {extra = {jump = true}},
     cost = 7,
     discovered = false,
     loc_vars = function(self, info_queue, card)
@@ -1696,7 +1702,10 @@ SMODS.Consumable{
     end,
     use = function(self, card, area, copier)
         if G.hand.cards and G.hand.cards[1] then
-            local left = G.hand.cards[1].base.suit     
+            local leftmost = G.hand.cards[1]
+            for i=1, #G.hand.cards do if G.hand.cards[i].T.x < leftmost.T.x then leftmost = G.hand.cards[i] end end
+            
+            local left = leftmost.base.suit     
             G.E_MANAGER:add_event(Event({
                 func = function()
                     for i=1, #G.hand.cards do
@@ -1729,7 +1738,7 @@ SMODS.Consumable{
     atlas = 'BattleCards',
     rarity = 'pm_uncommon',
     pos = { x = 4, y = 3 },
-    config = {extra = {selection_limit = 5}},
+    config = {extra = {selection_limit = 5, jump = true}},
     cost = 6,
     discovered = false,
     loc_vars = function(self, info_queue, card)
@@ -1744,7 +1753,10 @@ SMODS.Consumable{
     end,
     use = function(self, card, area, copier)
         if G.hand.highlighted and #G.hand.highlighted >= 2 and #G.hand.highlighted <= card.ability.extra.selection_limit then
-            local left = G.hand.highlighted[1]:get_id()
+            local leftmost = G.hand.highlighted[1]
+            for i=1, #G.hand.highlighted do if G.hand.highlighted[i].T.x < leftmost.T.x then leftmost = G.hand.highlighted[i] end end
+            
+            local left = leftmost:get_id()
             if left < 11 then left = tostring(left)
             elseif left == 11 then left = 'Jack'
             elseif left == 12 then left = 'Queen'
@@ -1783,7 +1795,7 @@ SMODS.Consumable{
     atlas = 'BattleCards',
     rarity = 'pm_rare',
     pos = { x = 5, y = 3 },
-    config = {extra = {}},
+    config = {extra = {jump = true}},
     cost = 8,
     discovered = false,
     loc_vars = function(self, info_queue, card)
@@ -1798,7 +1810,10 @@ SMODS.Consumable{
     end,
     use = function(self, card, area, copier)
         if G.hand.cards and G.hand.cards[1] then
-            local left = G.hand.cards[1]:get_id()    
+            local leftmost = G.hand.cards[1]
+            for i=1, #G.hand.cards do if G.hand.cards[i].T.x < leftmost.T.x then leftmost = G.hand.cards[i] end end
+            
+            local left = leftmost:get_id()    
             if left < 11 then left = tostring(left)
             elseif left == 11 then left = 'Jack'
             elseif left == 12 then left = 'Queen'
@@ -1837,7 +1852,7 @@ SMODS.Consumable{
     atlas = 'BattleCards',
     rarity = 'pm_common',
     pos = { x = 6, y = 3 },
-    config = {extra = {odds = 3, selection_limit = 1, increase = 1}},
+    config = {extra = {odds = 3, selection_limit = 1, increase = 1, hammer = true}},
     cost = 1,
     discovered = false,
     loc_vars = function(self, info_queue, card)
@@ -1898,8 +1913,8 @@ SMODS.Consumable{
     atlas = 'BattleCards',
     rarity = 'pm_common',
     pos = { x = 7, y = 3 },
-    config = {extra = {count = 3, copy = 'c_pm_wohammer'}},
-    cost = 1,
+    config = {extra = {count = 3, copy = 'c_pm_wohammer', hammer = true}},
+    cost = 3,
     discovered = false,
     loc_vars = function(self, info_queue, card)
         info_queue[#info_queue+1] = G.P_CENTERS.c_pm_wohammer
@@ -1928,8 +1943,8 @@ SMODS.Consumable{
     atlas = 'BattleCards',
     rarity = 'pm_uncommon',
     pos = { x = 8, y = 3 },
-    config = {extra = {count = 5, copy = 'c_pm_wohammer'}},
-    cost = 1,
+    config = {extra = {count = 5, copy = 'c_pm_wohammer', hammer = true}},
+    cost = 5,
     discovered = false,
     loc_vars = function(self, info_queue, card)
         info_queue[#info_queue+1] = G.P_CENTERS.c_pm_wohammer
@@ -1958,7 +1973,7 @@ SMODS.Consumable{
     atlas = 'BattleCards',
     rarity = 'pm_common',
     pos = { x = 9, y = 3 },
-    config = {extra = {odds = 3, selection_limit = 1, increase = 1, extra_use = false, uses = 0}},
+    config = {extra = {odds = 3, selection_limit = 1, increase = 1, extra_use = false, uses = 0, hammer = true}},
     cost = 3,
     discovered = false,
     loc_vars = function(self, info_queue, card)
@@ -2028,8 +2043,8 @@ SMODS.Consumable{
     atlas = 'BattleCards',
     rarity = 'pm_uncommon',
     pos = { x = 0, y = 4 },
-    config = {extra = {count = 2, copy = 'c_pm_hammer'}},
-    cost = 1,
+    config = {extra = {count = 2, copy = 'c_pm_hammer', hammer = true}},
+    cost = 5,
     discovered = false,
     loc_vars = function(self, info_queue, card)
         info_queue[#info_queue+1] = G.P_CENTERS.c_pm_hammer
@@ -2058,7 +2073,7 @@ SMODS.Consumable{
     atlas = 'BattleCards',
     rarity = 'pm_uncommon',
     pos = { x = 1, y = 4 },
-    config = {extra = {count = 3, copy = 'c_pm_hammer'}},
+    config = {extra = {count = 3, copy = 'c_pm_hammer', hammer = true}},
     cost = 1,
     discovered = false,
     loc_vars = function(self, info_queue, card)
@@ -2088,7 +2103,7 @@ SMODS.Consumable{
     atlas = 'BattleCards',
     rarity = 'pm_uncommon',
     pos = { x = 2, y = 4 },
-    config = {extra = {odds = 2, selection_limit = 1, increase = 2, extra_use = false, uses = 0}},
+    config = {extra = {odds = 2, selection_limit = 1, increase = 2, extra_use = false, uses = 0, hammer = true}},
     cost = 5,
     discovered = false,
     loc_vars = function(self, info_queue, card)
@@ -2157,8 +2172,8 @@ SMODS.Consumable{
     atlas = 'BattleCards',
     rarity = 'pm_rare',
     pos = { x = 3, y = 4 },
-    config = {extra = {count = 2, copy = 'c_pm_bighammer'}},
-    cost = 1,
+    config = {extra = {count = 2, copy = 'c_pm_bighammer', hammer = true}},
+    cost = 7,
     discovered = false,
     loc_vars = function(self, info_queue, card)
         info_queue[#info_queue+1] = G.P_CENTERS.c_pm_bighammer
@@ -2187,7 +2202,7 @@ SMODS.Consumable{
     atlas = 'BattleCards',
     rarity = 'pm_rare',
     pos = { x = 4, y = 4 },
-    config = {extra = {selection_limit = 1, increase = 3}},
+    config = {extra = {selection_limit = 1, increase = 3, hammer = true}},
     cost = 7,
     discovered = false,
     loc_vars = function(self, info_queue, card)
@@ -2228,7 +2243,7 @@ SMODS.Consumable{
     atlas = 'BattleCards',
     rarity = 'pm_uncommon',
     pos = { x = 5, y = 4 },
-    config = {extra = {odds = 1000}},
+    config = {extra = {odds = 10000, hammer = true}},
     cost = 5,
     discovered = false,
     loc_vars = function(self, info_queue, card)
@@ -2241,7 +2256,7 @@ SMODS.Consumable{
         if G.GAME.blind.in_blind then
             if G.STATE ~= G.STATES.PLAY_TAROT then return end
             if pseudorandom('KO') < (G.GAME.probabilities.normal / card.ability.extra.odds) then
-                G.GAME.chips = G.GAME.blind.chips
+
                 G.E_MANAGER:add_event(Event({trigger = 'after', delay = 0.4, func = function()
                     attention_text({
                         text = localize('pm_KO'),
@@ -2257,6 +2272,13 @@ SMODS.Consumable{
                             play_sound('tarot2', 0.76, 0.4);return true end}))
                         play_sound('tarot2', 1, 0.4)
                         card:juice_up(0.3, 0.5)
+                return true end }))
+
+                G.E_MANAGER:add_event(Event({trigger = 'after', delay = 0.4, func = function()
+                    G.GAME.chips = G.GAME.blind.chips
+                    G.STATE = G.STATES.HAND_PLAYED
+                    G.STATE_COMPLETE = true
+                    end_round() 
                 return true end }))
             else
                 -- yes this is just WOF code lmao
@@ -2288,7 +2310,7 @@ SMODS.Consumable{
     atlas = 'BattleCards',
     rarity = 'pm_uncommon',
     pos = { x = 6, y = 4 },
-    config = {extra = {odds = 500}},
+    config = {extra = {odds = 500, hammer = true}},
     cost = 5,
     discovered = false,
     loc_vars = function(self, info_queue, card)
@@ -2301,8 +2323,6 @@ SMODS.Consumable{
         if G.GAME.blind.in_blind then
             if G.STATE ~= G.STATES.PLAY_TAROT then return end
             if pseudorandom('KO') < (G.GAME.probabilities.normal / card.ability.extra.odds) then
-                G.GAME.chips = G.GAME.blind.chips
-
                 G.E_MANAGER:add_event(Event({trigger = 'after', delay = 0.4, func = function()
                     attention_text({
                         text = localize('pm_KO'),
@@ -2318,6 +2338,13 @@ SMODS.Consumable{
                             play_sound('tarot2', 0.76, 0.4);return true end}))
                         play_sound('tarot2', 1, 0.4)
                         card:juice_up(0.3, 0.5)
+                return true end }))
+
+                G.E_MANAGER:add_event(Event({trigger = 'after', delay = 0.4, func = function()
+                    G.GAME.chips = G.GAME.blind.chips
+                    G.STATE = G.STATES.HAND_PLAYED
+                    G.STATE_COMPLETE = true
+                    end_round() 
                 return true end }))
             else
                 -- yes this is just WOF code lmao
@@ -2350,7 +2377,7 @@ SMODS.Consumable{
     atlas = 'BattleCards',
     rarity = 'pm_rare',
     pos = { x = 7, y = 4 },
-    config = {extra = {odds = 100}},
+    config = {extra = {odds = 100, hammer = true}},
     cost = 5,
     discovered = false,
     loc_vars = function(self, info_queue, card)
@@ -2363,8 +2390,6 @@ SMODS.Consumable{
         if G.GAME.blind.in_blind then
             if G.STATE ~= G.STATES.PLAY_TAROT then return
             elseif pseudorandom('KO') < (G.GAME.probabilities.normal / card.ability.extra.odds) then
-                G.GAME.chips = G.GAME.blind.chips
-
                 G.E_MANAGER:add_event(Event({trigger = 'after', delay = 0.4, func = function()
                     attention_text({
                         text = localize('pm_KO'),
@@ -2380,6 +2405,13 @@ SMODS.Consumable{
                             play_sound('tarot2', 0.76, 0.4);return true end}))
                         play_sound('tarot2', 1, 0.4)
                         card:juice_up(0.3, 0.5)
+                return true end }))
+
+                G.E_MANAGER:add_event(Event({trigger = 'after', delay = 0.4, func = function()
+                    G.GAME.chips = G.GAME.blind.chips
+                    G.STATE = G.STATES.HAND_PLAYED
+                    G.STATE_COMPLETE = true
+                    end_round() 
                 return true end }))
             else
                 -- yes this is just WOF code lmao
@@ -2412,8 +2444,8 @@ SMODS.Consumable{
     atlas = 'BattleCards',
     rarity = 'pm_common',
     pos = { x = 8, y = 4 },
-    config = {extra = {selection_limit = 1, mult_gain = 3, uses = 0}},
-    cost = 7,
+    config = {extra = {selection_limit = 1, mult_gain = 3, uses = 0, hammer = true}},
+    cost = 6,
     discovered = false,
     loc_vars = function(self, info_queue, card)
 		return { vars = {card.ability.extra.selection_limit, card.ability.extra.mult_gain, 5-card.ability.extra.uses} }
@@ -2457,8 +2489,8 @@ SMODS.Consumable{
     atlas = 'BattleCards',
     rarity = 'pm_uncommon',
     pos = { x = 9, y = 4 },
-    config = {extra = {count = 2, copy = 'c_pm_eekhammer'}},
-    cost = 1,
+    config = {extra = {count = 2, copy = 'c_pm_eekhammer', hammer = true}},
+    cost = 7,
     discovered = false,
     loc_vars = function(self, info_queue, card)
         info_queue[#info_queue+1] = G.P_CENTERS.c_pm_eekhammer
@@ -2487,8 +2519,8 @@ SMODS.Consumable{
     atlas = 'BattleCards',
     rarity = 'pm_uncommon',
     pos = { x = 0, y = 5 },
-    config = {extra = {count = 3, copy = 'c_pm_eekhammer'}},
-    cost = 1,
+    config = {extra = {count = 3, copy = 'c_pm_eekhammer', hammer = true}},
+    cost = 8,
     discovered = false,
     loc_vars = function(self, info_queue, card)
         info_queue[#info_queue+1] = G.P_CENTERS.c_pm_eekhammer
@@ -2517,7 +2549,7 @@ SMODS.Consumable{
     atlas = 'BattleCards',
     rarity = 'pm_uncommon',
     pos = { x = 1, y = 5 },
-    config = {extra = {selection_limit = 1, mult_gain = 6, uses = 0}},
+    config = {extra = {selection_limit = 1, mult_gain = 6, uses = 0, hammer = true}},
     cost = 7,
     discovered = false,
     loc_vars = function(self, info_queue, card)
@@ -2562,8 +2594,8 @@ SMODS.Consumable{
     atlas = 'BattleCards',
     rarity = 'pm_rare',
     pos = { x = 2, y = 5 },
-    config = {extra = {count = 2, copy = 'c_pm_bigeekhammer'}},
-    cost = 1,
+    config = {extra = {count = 2, copy = 'c_pm_bigeekhammer', hammer = true}},
+    cost = 8,
     discovered = false,
     loc_vars = function(self, info_queue, card)
         info_queue[#info_queue+1] = G.P_CENTERS.c_pm_bigeekhammer
@@ -2592,7 +2624,7 @@ SMODS.Consumable{
     atlas = 'BattleCards',
     rarity = 'pm_rare',
     pos = { x = 3, y = 5 },
-    config = {extra = {selection_limit = 1, xmult_gain = 0.1, uses = 0}},
+    config = {extra = {selection_limit = 1, xmult_gain = 0.1, uses = 0, hammer = true}},
     cost = 7,
     discovered = false,
     loc_vars = function(self, info_queue, card)
@@ -2637,7 +2669,7 @@ SMODS.Consumable{
     atlas = 'BattleCards',
     rarity = 'pm_common',
     pos = { x = 4, y = 5 },
-    config = {extra = {odds = 5, selection_limit = 5}},
+    config = {extra = {odds = 5, selection_limit = 5, hammer = true}},
     cost = 4,
     discovered = false,
     loc_vars = function(self, info_queue, card)
@@ -2692,8 +2724,8 @@ SMODS.Consumable{
     atlas = 'BattleCards',
     rarity = 'pm_uncommon',
     pos = { x = 5, y = 5 },
-    config = {extra = {count = 2, copy = 'c_pm_hurlhammer'}},
-    cost = 1,
+    config = {extra = {count = 2, copy = 'c_pm_hurlhammer', hammer = true}},
+    cost = 6,
     discovered = false,
     loc_vars = function(self, info_queue, card)
         info_queue[#info_queue+1] = G.P_CENTERS.c_pm_hurlhammer
@@ -2722,8 +2754,8 @@ SMODS.Consumable{
     atlas = 'BattleCards',
     rarity = 'pm_uncommon',
     pos = { x = 6, y = 5 },
-    config = {extra = {count = 3, copy = 'c_pm_hurlhammer'}},
-    cost = 1,
+    config = {extra = {count = 3, copy = 'c_pm_hurlhammer', hammer = true}},
+    cost = 7,
     discovered = false,
     loc_vars = function(self, info_queue, card)
         info_queue[#info_queue+1] = G.P_CENTERS.c_pm_hurlhammer
@@ -2752,7 +2784,7 @@ SMODS.Consumable{
     atlas = 'BattleCards',
     rarity = 'pm_uncommon',
     pos = { x = 7, y = 5 },
-    config = {extra = {odds = 2, selection_limit = 5}},
+    config = {extra = {odds = 2, selection_limit = 5, hammer = true}},
     cost = 6,
     discovered = false,
     loc_vars = function(self, info_queue, card)
@@ -2807,7 +2839,7 @@ SMODS.Consumable{
     atlas = 'BattleCards',
     rarity = 'pm_rare',
     pos = { x = 8, y = 5 },
-    config = {extra = {selection_limit = 5}},
+    config = {extra = {selection_limit = 5, hammer = true}},
     cost = 8,
     discovered = false,
     loc_vars = function(self, info_queue, card)
@@ -2843,7 +2875,7 @@ SMODS.Consumable{
     atlas = 'BattleCards',
     rarity = 'pm_uncommon',
     pos = { x = 9, y = 5 },
-    config = {extra = {selection_limit = 5, money = 7}},
+    config = {extra = {selection_limit = 5, money = 7, hammer = true}},
     cost = 5,
     discovered = false,
     loc_vars = function(self, info_queue, card)
@@ -3668,6 +3700,5 @@ SMODS.Consumable{
         return SMODS.Stickers['pm_monochrome'].rate > 0 and count > 0
     end,
 }
-
 ----------------------------------------------
 ------------MOD CODE END----------------------

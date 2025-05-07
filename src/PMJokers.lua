@@ -873,7 +873,7 @@ SMODS.Joker{
     cost = 3,
     blueprint_compat = false,
     pos = { x = 1, y = 3 },
-    config = { extra = {chips = 0 , chip_gain = 30} },
+    config = { extra = {chips = 0 , chip_gain = 5} },
     loc_vars = function(self, info_queue, card)
         return { vars = { card.ability.extra.chips, card.ability.extra.chip_gain } }
     end,
@@ -935,39 +935,43 @@ SMODS.Joker{
 -- Fishy Boopkins
 SMODS.Joker{
     key = 'fishyboop',
-    rarity = 2,
+    rarity = 3,
     atlas = 'PaperMario',
     discovered = false,
-    cost = 4,
+    cost = 7,
     blueprint_compat = true,
     pos = { x = 3, y = 3 },
-    config = { extra = {money = 1, suit = 'Clubs', hand = "Straight Flush", hand_extra = "Royal Flush"} },
+    config = { extra = {hand = "Straight", hand_extra = "Flush"} },
     loc_vars = function(self, info_queue, card)
-        info_queue[#info_queue+1] = G.P_CENTERS.c_moon
-        return { vars = { card.ability.extra.money, card.ability.extra.hand } }
+        info_queue[#info_queue+1] = G.P_CENTERS.c_pm_spinjump
+        info_queue[#info_queue+1] = G.P_CENTERS.c_pm_hugelinejump
+        return { vars = { card.ability.extra.hand, card.ability.extra.hand_extra } }
     end,
     calculate = function(self, card, context)
-
-        -- checks for a Straight Flush to create a Moon card with.
-        if context.before and (string.find(context.scoring_name, card.ability.extra.hand) or (string.find(context.scoring_name, card.ability.extra.hand_extra))) then
-            local t = {
-                area = G.consumeables,
-                key = 'c_moon'
-            }
-            SMODS.add_card(t)
-            card:juice_up()
-            return{
-                message = localize("pm_spiked"),
-                color = G.C.ATTENTION,
-                card = card
-            }
-        end
-
-        -- the money part
-        if context.individual and context.cardarea == G.play then
-            if context.other_card:is_suit(card.ability.extra.suit) then
-                return {
-                    dollars = card.ability.extra.money,
+        if context.before and context.cardarea == G.jokers then
+            if string.find(context.scoring_name, card.ability.extra.hand) then
+                local t = {
+                    area = G.consumeables,
+                    key = 'c_pm_spinjump'
+                }
+                SMODS.add_card(t)
+                card:juice_up()
+                return{
+                    message = localize("pm_spiked"),
+                    color = G.C.ATTENTION,
+                    card = card
+                }
+            end
+            if string.find(context.scoring_name, card.ability.extra.hand_extra) then
+                local t = {
+                    area = G.consumeables,
+                    key = 'c_pm_hugelinejump'
+                }
+                SMODS.add_card(t)
+                card:juice_up()
+                return{
+                    message = localize("pm_spiked"),
+                    color = G.C.ATTENTION,
                     card = card
                 }
             end
@@ -1111,9 +1115,9 @@ SMODS.Joker{
     cost = 7,
     blueprint_compat = true,
     pos = { x = 0, y = 4 },
-    config = { extra = {mult = 0} },
+    config = { extra = {hands = 1} },
     loc_vars = function(self, info_queue, card)
-        return { vars = { card.ability.extra.mult } }
+        return { vars = { card.ability.extra.hands } }
     end,
     calculate = function(self, card, context)
         
@@ -1136,7 +1140,7 @@ SMODS.Joker{
 
         if context.discard then
             if not context.blueprint and G.GAME.current_round.discards_used <= 0 and #context.full_hand == 1 then
-                    card.ability.extra.mult = card.ability.extra.mult + context.full_hand[1].base.nominal
+                    ease_hands_played(1)
                     card:juice_up(0.3, 0.4)
                     card_eval_status_text(context.blueprint_card or card, 'extra', nil, nil, nil, {message = localize("pm_upgraded")})
                     return {
@@ -1852,7 +1856,7 @@ SMODS.Joker{
 -- Spiny
 SMODS.Joker{
     key = 'spiny',
-    rarity = 2,
+    rarity = 3,
     atlas = 'PaperMario',
     discovered = false,
     cost = 6,
@@ -1907,7 +1911,7 @@ SMODS.Joker{
 -- Buzzy Beetle
 SMODS.Joker{
     key = 'buzzy',
-    rarity = 2,
+    rarity = 3,
     atlas = 'PaperMario',
     discovered = false,
     cost = 6,
@@ -2039,7 +2043,7 @@ SMODS.Joker{
     cost = 7,
     blueprint_compat = true,
     pos = { x = 3, y = 6 },
-    config = { extra = {odds = 6, enhancement = 'Wild', mult = 5, hand = 'Flush'} },
+    config = { extra = {odds = 6, enhancement = 'Wild', mult = 8, hand = 'Flush'} },
     loc_vars = function(self, info_queue, card)
         info_queue[#info_queue+1] = G.P_CENTERS.m_wild
         return { vars = {(G.GAME.probabilities.normal or 1), card.ability.extra.odds, card.ability.extra.enhancement, card.ability.extra.mult, card.ability.extra.hand } }
@@ -2068,11 +2072,12 @@ SMODS.Joker{
             end
         end
 
-        if context.individual and context.cardarea == G.play and string.find(context.scoring_name, "Flush") then
+        if context.individual and context.cardarea == G.play and context.other_card.config.center == G.P_CENTERS.m_wild then
             if not context.end_of_round and not context.before and not context.after and not context.other_card.debuff then
                 return {
-                    mult = card.ability.extra.mult
-              }
+                    mult = card.ability.extra.mult,
+                    card = context.other_card,
+                }
             end
         end
     end
@@ -2598,36 +2603,32 @@ SMODS.Joker{
     cost = 8,
     blueprint_compat = true,
     pos = { x = 0, y = 8 },
-    config = { extra = {Xmult = 1.0, Xmult_gain = 1.0, bro = 1} },
+    config = { extra = {chips = 25, bro = 1} },
     loc_vars = function(self, info_queue, card)
-        return { vars = { card.ability.extra.Xmult, card.ability.extra.Xmult_gain } }
+        return { vars = {card.ability.extra.chips} }
     end,
     calculate = function(self, card, context)
-        -- Applies the Xmult.
-        if context.cardarea == G.jokers and context.scoring_hand then
-            if context.joker_main then
-                return {
-                    xmult = card.ability.extra.Xmult,
-                    card = card
-                }
-            end
-        end
-    end,
-    update = function(self, card, dt)
-        local bro_count = 0
-        if G.STAGE == G.STAGES.RUN then
-            for i = 1, #G.jokers.cards do
-                local j = G.jokers.cards[i]
-                if j.ability and type(j.ability.extra) == 'table' and j.ability.extra.bro and card ~= j then
-                    bro_count = bro_count + 1
+        if context.before and not context.blueprint then
+            local thunk = 0
+            for k, v in ipairs(context.full_hand) do
+                if v.config.center == G.P_CENTERS.m_stone then
+                    thunk = thunk + 1
+                    local current_chips = v.perma_bonus or 0
+                    v.perma_bonus = current_chips + card.ability.extra.chips
+                    G.E_MANAGER:add_event(Event({
+                        func = function()
+                            v:juice_up()
+                            return true
+                        end
+                    })) 
                 end
             end
-
-            if bro_count > 0 then
-                card.ability.extra.Xmult = 1 + (card.ability.extra.Xmult_gain * bro_count)
+            if thunk > 0 then
+                return{
+                    message = localize('pm_upgraded'),
+                    colour = G.C.BLUE
+                }
             end
-        else
-            card.ability.extra.Xmult = 1
         end
     end
 }
@@ -2659,7 +2660,7 @@ SMODS.Joker{
             if not context.blueprint and G.GAME.current_round.discards_used <= 0 and #context.full_hand == 1 and #G.consumeables.cards < G.consumeables.config.card_limit then
                 -- create the tarot card
                 local t = {
-                    set = 'Tarot'
+                    set = 'pm_BattleCard'
                 }
                 SMODS.add_card(t)
                 card:juice_up()

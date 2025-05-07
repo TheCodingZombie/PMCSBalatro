@@ -205,3 +205,14 @@ if pm_config.custom_splash then
 end
 '''
 match_indent = true
+
+# KO Hammer Prevention of card drawing while using KO Hammer
+[[patches]]
+[patches.pattern]
+target = "functions/state_events.lua"
+pattern = "local hand_space = e"
+position = "before"
+payload = '''
+if G.STATE == 8 then return true end
+'''
+match_indent = true
