@@ -22,7 +22,7 @@ Based off of the "Things" from Color Splash, these often have powerful effects t
 These Jokers are quite rare, though you can get copies of these quite easily!
 
 ### New Edition: Replica!
-Replica currently reduces mult by a factor of 0.9x!
+Replica currently reduces mult by a factor of 0.9x, and disables the Joker during Boss Blinds.
 Replica Jokers cannot be found in the shop and can only be found by copying Jokers using effects from this mod!
 
 ### New Statuses: Drained and Painted!
