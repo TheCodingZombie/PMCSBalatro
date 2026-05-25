@@ -161,6 +161,13 @@ SMODS.Atlas { -- All Tags
 	py = 34,
 }
 
+SMODS.Atlas{
+    key = "PMPartners",
+    px = 46,
+    py = 58,
+    path = "PMPartners.png"
+}
+
 -- load in the RGB Light color yippee
 SMODS.Gradient{
     key = 'rgbled',
@@ -217,6 +224,12 @@ local load_order = {'PMAchievements.lua', 'PMBosses.lua', 'PMChallenges.lua', 'P
 for i=1, #load_order do
     local v = load_order[i]
     assert(SMODS.load_file('src/'..v))()
+end
+
+partners = (SMODS.Mods['partner'] or {}).can_load or false
+
+if partners then
+    SMODS.load_file("src/PMPartners.lua")()
 end
 
 --Load UI file

@@ -1,0 +1,62 @@
+-- this is to store code for later use, i couldn't figure it out now but maybe later
+
+local SMODS_calculate_retriggers_ref = SMODS.calculate_retriggers
+SMODS.calculate_retriggers = function(card, context, _ret)
+    local retriggers = SMODS_calculate_retriggers_ref(card, context, _ret)
+    if not partners then return retriggers end
+
+    if G.GAME.selected_partner_card and G.GAME.selected_partner_card.ability then
+        local _card = G.GAME.selected_partner_card
+        local eval = _card:calculate_partner({retrigger_partner = _card, retrigger_joker_check = true, other_card = _card, other_context = context, other_ret = _ret})
+        if eval then
+            eval.retrigger_juice = card
+            SMODS.insert_repetitions(retriggers, eval, _card)
+        end
+    end
+
+    return retriggers
+end
+local SMODS_calculate_repetitions_ref = SMODS.calculate_repetitions
+SMODS.calculate_repetitions = function(card, context, reps)
+    local reps = SMODS_calculate_repetitions_ref(card, context, reps)
+    if not partners then return reps end
+
+    if G.GAME.selected_partner_card and G.GAME.selected_partner_card.ability then
+        local ret = {}
+
+        local _card = G.GAME.selected_partner_card
+        --print(_card)
+        local eff = _card:calculate_partner({retrigger_partner = _card, retrigger_joker_check = true, other_card = _card, other_context = context, other_ret = _ret})
+        if type(eff) ~= 'table' then eff = nil end
+        
+        if (eff and not eff.no_retrigger) or triggered then
+            ret.individual = eff
+
+            local retriggers = SMODS.calculate_retriggers(_card, context, ret)
+            if next(retriggers) then
+                ret.retriggers = retriggers
+            end
+        end
+
+        if ret.retriggers then
+            context.retrigger_partner = true
+            for rt = 1, #ret.retriggers do
+                context.retrigger_partner = ret.retriggers[rt].retrigger_card
+                SMODS.insert_repetitions(reps, ret.retriggers[rt], ret.retriggers[rt].message_card or _card)
+                local eval = _card:calculate_partner(context)
+                for key, value in pairs(eval) do
+                    if key ~= 'retriggers' then
+                        SMODS.insert_repetitions(reps, value, _card)
+                    end
+                end
+                --print("CR3")
+                print(ret.retriggers[rt].retrigger_card)
+            end
+            context.retrigger_partner = nil
+        end
+
+        
+    end
+
+    return reps
+end

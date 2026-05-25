@@ -1627,6 +1627,60 @@ return {
                 },
             },
 
+            pm_goombella_green = {
+                name = "Super Rank Ability",
+                text = {
+                    "{C:green}Multibonk:{} {C:green}1 in 1{}",
+                    "chance to retrigger the first scored card.",
+                    "{C:green}1 in 2{} chance to retrigger again,",
+                    "with increasingly low odds",
+                    "each time this effect occurs."
+                }
+            },
+
+            pm_goombella_red = {
+                name = "Ultra Rank Ability",
+                text = {
+                    "{C:red}Rally Wink:{} {C:blue}+1{} Hand"
+                }
+            },
+
+            pm_koops_green = {
+                name = "Super Rank Ability",
+                text = {
+                    "{C:green}Shell Shield:{} You cannot die",
+                    "in the first hand."
+                }
+            },
+
+            pm_koops_red = {
+                name = "Ultra Rank Ability",
+                text = {
+                    "{C:red}Shell Slam:{} Straights give",
+                    "{X:mult,C:white}x2.5{} Mult. {C:red}Disable{}",
+                    "all Boss Blind effects that",
+                    "affect your score."
+                }
+            },
+
+            pm_yoshi_green = {
+                name = "Super Rank Ability",
+                text = {
+                    "{C:green}Mini-Egg:{} Reduce the score",
+                    "requirement of the current {C:attention}Blind{}",
+                    "when playing a Flush.",
+                    "{C:inactive}(cannot activate for {C:attention}3{C:inactive} rounds when used){}",
+                }
+            },
+
+            pm_yoshi_red = {
+                name = "Ultra Rank Ability",
+                text = {
+                    "{C:red}Stampede:{} {X:mult,C:white}x1.5{} Mult",
+                    "to all cards played and scored."
+                }
+            },
+
             --Booster Packs
             p_pm_bc_basic_1 = {
                 name = "Basic Pack",
@@ -2402,6 +2456,35 @@ return {
                 }
             },
         },
+        Partner={
+            pnr_pm_goombella = {
+                name = "Goombella",
+                text = {
+                    "{C:money}Headbonk:{} {C:blue}+#1#{} Chips, {C:green}#2# in #3#{}",
+                    "chance to give {C:blue}+#4#{} Chips instead",
+                    "{C:blue}Tattle:{} Click to show a message!"
+                }
+            },
+            pnr_pm_koops = {
+                name = "Koops",
+                text = {
+                    "{C:money}Shell Toss:{} Straights give {C:red}+#1#{} Mult.",
+                    "{C:blue}Power Shell:{} When you play a Straight,",
+                    "each card gives {C:chips}+#2#{} Chips",
+                }
+            },
+            pnr_pm_yoshi = {
+                name = "Yoshi",
+                text = {
+                    "{C:money}Ground Pound:{} Each card gives {C:blue}+#1#{} Chips.",
+                    "{C:blue}Gulp:{} Instantly score {C:attention}#2#%{} of",
+                    "the required score for the current {C:attention}Blind{} when",
+                    "playing a High Card.",
+                    "{C:inactive}(cannot activate for {C:attention}3{C:inactive} rounds when used){}",
+                    "{C:inactive}({C:attention}#3#{} Rounds until usable){}",
+                }
+            },
+        },
     },
     misc = {
         achievement_descriptions={
@@ -2540,6 +2623,9 @@ return {
             pm_credits_lead = "Solo Developer and Artist:",
             pm_credits_mod = "Mods Credited:",
             pm_credits_game = "Additional Credits to:",
+
+            -- Partners
+            pm_lucky = "Lucky Bonk!",
         },
         high_scores={},
         labels={
@@ -2560,7 +2646,83 @@ return {
         },
         poker_hand_descriptions={},
         poker_hands={},
-        quips={},
+        quips={ 
+            pm_goombella_normal_1 = {
+                "I'm a big fan of flushes!",
+                "Maybe try a flush this round?"
+            },
+            pm_goombella_hook = {
+                "Did you know the Hook can",
+                "trigger Purple Seals?"
+            },
+            pm_goombella_money = {
+                "Don't worry too much about losing money,",
+                "Go all in on defeating the Boss!"
+            },
+            pm_goombella_hidden = {
+                "You can switch sorting modes",
+                "to see where cards might end up!"
+            },
+            pm_goombella_none = {
+                "No tips here! Give it",
+                "all you got, Mario!"
+            },
+            pm_goombella_arm = {
+                "Don't play a hand you've leveled up",
+                "a lot if you can help it!"
+            },
+            pm_goombella_suit = {
+                "Ooh, not being able to play a suit",
+                "stings! Try switching up your",
+                "strategy, Mario!",
+            },
+            pm_goombella_water = {
+                "Hands can be pseudo-discards",
+                "in a pinch!"
+            },
+            pm_goombella_psychic = {
+                "Not all cards need to score",
+                "to meet the boss's requirement!"
+            },
+            pm_goombella_hand = {
+                "Losing hands sucks! Be careful",
+                "with what you play, Mario!"
+            },
+            pm_goombella_speedrun = {
+                "Try to win this in one hand",
+                "to avoid losing your best one!"
+            },
+            pm_goombella_mouth = {
+                "If you've centered your strategy",
+                "around one type of hand, this",
+                "boss shouldn't be an issue!"
+            },
+            pm_goombella_disabled = {
+                "Ooh, not being able to play",
+                "some cards stings! Try switching",
+                "up your strategy, Mario!",
+            },
+            pm_goombella_flint = {
+                "Levelling up hands is a good way",
+                "to combat this Boss's ability!"
+            },
+            pm_goombella_amber = {
+                "Woah! Hopefully we don't have a",
+                "Blueprint or Brainstorm!"
+            },
+            pm_goombella_verdant = {
+                "Ouch! Which Joker do we not need",
+                "to win?"
+            },
+            pm_goombella_bell = {
+                "High Card strategies won't get",
+                "affected by this!"
+            },
+            pm_goombella_snake = {
+                "Try discarding multiple singular",
+                "cards to get a surplus of cards!"
+            }
+        },
         ranks={},
         suits_plural={},
         suits_singular={},
