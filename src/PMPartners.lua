@@ -92,7 +92,7 @@ Partner_API.Partner{
     discovered = true,
     pos = {x = 1, y = 0},
     atlas = "PMPartners",
-    config = {extra = {mult = 7, chips = 25, shielded = true, x_mult = 2.5, rank = 2}},
+    config = {extra = {mult = 7, chips = 25, shielded = true, x_mult = 2.5, rank = 0}},
     loc_vars = function(self, info_queue, card)
         if card.ability.extra.rank >= 1 then info_queue[#info_queue+1] = {set = 'Other', key = 'pm_koops_green'} end
         if card.ability.extra.rank >= 2 then info_queue[#info_queue+1] = {set = 'Other', key = 'pm_koops_red'} end
@@ -156,14 +156,70 @@ Partner_API.Partner{
     end
 }
 
--- Flurrie
+Partner_API.Partner{
+    key = "flurrie",
+    discovered = true,
+    pos = {x = 2, y = 0},
+    atlas = "PMPartners",
+    config = {extra = {chips= 250, chance = 3, money = 5, kiss_chance = 1, true_score = 250, save_chance = 7, rank = 2}},
+    loc_vars = function(self, info_queue, card)
+        if card.ability.extra.rank >= 1 then info_queue[#info_queue+1] = {set = 'Other', key = 'pm_flurrie_green'} end
+        if card.ability.extra.rank >= 2 then info_queue[#info_queue+1] = {set = 'Other', key = 'pm_flurrie_red'} end
+        return { vars = { G.GAME.probabilities.normal, card.ability.extra.chance, card.ability.extra.chips, card.ability.extra.money }}
+    end,
+    calculate = function(self, card, context)
+        if context.joker_main then -- Body Slam
+            if pseudorandom('flurrie') < (G.GAME.probabilities.normal / card.ability.extra.chance) then
+                return {
+                    chips = card.ability.extra.chips,
+                    card = card
+                }
+            end
+        end
+        
+        if context.skip_blind then -- Gale Force
+            return {
+                dollars = card.ability.extra.money,
+                card = card
+            }
+        end
+
+        if context.final_scoring_step and card.ability.extra.rank >= 1 then -- Lip Lock
+            if pseudorandom('flurrie') < (G.GAME.probabilities.normal / card.ability.extra.kiss_chance) then
+                ease_hands_played(1)
+                G.GAME.chips = G.GAME.chips + card.ability.extra.true_score
+                G.hand_text_area.game_chips:juice_up()
+                return { 
+                    card = card
+                }
+            end
+        end
+
+        -- Dodgy Fog
+        if context.end_of_round and card.ability.extra.rank >= 2 and context.game_over and pseudorandom('flurrie') < (G.GAME.probabilities.normal / card.ability.extra.save_chance) then
+            G.E_MANAGER:add_event(Event({
+                func = function()
+                    G.hand_text_area.blind_chips:juice_up()
+                    G.hand_text_area.game_chips:juice_up()
+                    play_sound('tarot1')
+                    return true
+                end
+            })) 
+            return {
+                message = localize('k_saved_ex'),
+                saved = true,
+                colour = G.C.RED
+            }
+        end
+    end
+}
 
 Partner_API.Partner{
     key = "yoshi",
     discovered = true,
     pos = {x = 3, y = 0},
     atlas = "PMPartners",
-    config = {extra = {chips = 5, instant_score = 40, blue_cooldown = 0, score_reduction = 20, green_cooldown = 0, x_mult = 1.25, rank = 2}},
+    config = {extra = {chips = 5, instant_score = 40, blue_cooldown = 0, score_reduction = 20, green_cooldown = 0, x_mult = 1.25, rank = 0}},
     loc_vars = function(self, info_queue, card)
         if card.ability.extra.rank >= 1 then info_queue[#info_queue+1] = {set = 'Other', key = 'pm_yoshi_green'} end
         if card.ability.extra.rank >= 2 then info_queue[#info_queue+1] = {set = 'Other', key = 'pm_yoshi_red'} end

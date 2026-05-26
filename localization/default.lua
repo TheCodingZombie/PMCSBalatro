@@ -1681,6 +1681,23 @@ return {
                 }
             },
 
+            pm_flurrie_green = {
+                name = "Super Rank Ability",
+                text = {
+                    "{C:green}Lip Lock:{} {C:green}1 in 3{}",
+                    "chance to gain {C:attention}250{} score",
+                    "and {C:blue}1{} Hand every played hand."
+                }
+            },
+
+            pm_flurrie_red = {
+                name = "Ultra Rank Ability",
+                text = {
+                    "{C:red}Dodgy Fog:{} {C:green}1 in 7{}",
+                    "chance to save you from {C:red}death{}",
+                }
+            },
+
             --Booster Packs
             p_pm_bc_basic_1 = {
                 name = "Basic Pack",
@@ -2482,6 +2499,15 @@ return {
                     "playing a High Card.",
                     "{C:inactive}(cannot activate for {C:attention}3{C:inactive} rounds when used){}",
                     "{C:inactive}({C:attention}#3#{} Rounds until usable){}",
+                }
+            },
+            pnr_pm_flurrie = {
+                name = "Flurrie",
+                text = {
+                    "{C:money}Body Slam:{} {C:green}#1# in #2#{}",
+                    "chance to gain {C:blue}+#3#{} Chips.",
+                    "{C:blue}Gale Force:{} Gain {C:money}$#4#{}",
+                    "when skipping {C:attention}Blinds{}.",
                 }
             },
         },
