@@ -272,6 +272,83 @@ Partner_API.Partner{
             if card.ability.extra.blue_cooldown > 0 then card.ability.extra.blue_cooldown = card.ability.extra.blue_cooldown - 1 end
             if card.ability.extra.green_cooldown > 0 then card.ability.extra.blue_cooldown = card.ability.extra.green_cooldown - 1 end
         end
+    end    
+}
+
+Partner_API.Partner{
+    key = "vivian",
+    discovered = true,
+    pos = {x = 0, y = 1},
+    atlas = "PMPartners",
+    config = {extra = {true_score = 10, discard_cost = 2, ability_active = false, green_true_score = 5, red_chance = 7, red_true_score = 50, rank = 2}},
+    loc_vars = function(self, info_queue, card)
+        if card.ability.extra.rank >= 1 then info_queue[#info_queue+1] = {set = 'Other', key = 'pm_vivian_green'} end
+        if card.ability.extra.rank >= 2 then info_queue[#info_queue+1] = {set = 'Other', key = 'pm_vivian_red'} end
+        return { vars = { card.ability.extra.true_score, card.ability.extra.discard_cost, }}
+    end,
+    calculate = function(self, card, context)
+        
+        if G.GAME.blind.in_blind then
+            if context.partner_click and not card.ability.extra.ability_active and G.GAME.current_round.discards_left >= card.ability.extra.discard_cost then
+                card.ability.extra.ability_active = true
+                ease_discard(card.ability.extra.discard_cost*-1)
+                local eval = function() return card.ability.extra.ability_active and not G.RESET_JIGGLES end
+                juice_card_until(card, eval, true)
+                return {
+                    message = localize("pm_activated"),
+                    card = card
+                }
+            end
+        end
+
+        if context.joker_main and card.ability.extra.ability_active then -- Shade Fist active ability
+            G.GAME.chips = G.GAME.chips + (G.GAME.blind.chips * (card.ability.extra.true_score/100))
+            G.hand_text_area.game_chips:juice_up()
+            return {
+                message = localize("pm_shade"),
+                card = card
+            }
+        end
+
+        if context.end_of_round and card.ability.extra.ability_active then
+            card.ability.extra.ability_active = false
+        end
+
+        if context.setting_blind and G.GAME.current_round.discards_left >= 1 then -- Veil
+            if G.GAME.blind and ((not G.GAME.blind.disabled) and (G.GAME.blind:get_type() == 'Boss')) then 
+                card_eval_status_text(card, 'extra', nil, nil, nil, {message = localize('ph_boss_disabled')})
+                G.GAME.blind:disable()
+                ease_discard(-1)
+            end
+        end
+
+        if context.final_scoring_step and card.ability.extra.rank >= 1 then -- Fiery Jinx
+            if not context.end_of_round and not context.before and not context.after then
+                if string.find(context.scoring_name, "Straight") then
+                    if string.find(context.scoring_name, "Flush") then
+                        G.GAME.chips = G.GAME.chips + (G.GAME.blind.chips * ((card.ability.extra.green_true_score*card.ability.extra.green_true_score)/100))
+                    else
+                        G.GAME.chips = G.GAME.chips + (G.GAME.blind.chips * (card.ability.extra.green_true_score/100))
+                    end
+                    G.hand_text_area.game_chips:juice_up()
+                    return {
+                        message = localize("pm_fiery_jinx"),
+                        card = card
+                    }
+                end
+            end
+        end
+
+        if context.final_scoring_step and card.ability.extra.rank >= 2 then -- Infatuate
+            if string.find(context.scoring_name, "High Card") and pseudorandom("vivian") < (G.GAME.probabilities.normal / card.ability.extra.red_chance) then
+                G.GAME.chips = G.GAME.chips + (G.GAME.blind.chips * (card.ability.extra.red_true_score/100))
+                G.hand_text_area.game_chips:juice_up()
+                return {
+                    message = localize("pm_infatuate"),
+                    card = card
+                }
+            end
+        end
 
     end    
 }

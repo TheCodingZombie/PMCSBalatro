@@ -1698,6 +1698,25 @@ return {
                 }
             },
 
+            pm_vivian_green = {
+                name = "Super Rank Ability",
+                text = {
+                    "{C:green}Fiery Jinx:{} Straights give",
+                    "{C:attention}5%{} of required score.",
+                    "Straight Flushes give {C:attention}25%{} instead.",
+                }
+            },
+
+            pm_vivian_red = {
+                name = "Ultra Rank Ability",
+                text = {
+                    "{C:red}Infatuate:{} {C:green}1 in 7{}",
+                    "chance to score {C:attention}50%{} of",
+                    "required score when playing a",
+                    "{C:attention}High Card{}.",
+                }
+            },
+
             --Booster Packs
             p_pm_bc_basic_1 = {
                 name = "Basic Pack",
@@ -2510,6 +2529,17 @@ return {
                     "when skipping {C:attention}Blinds{}.",
                 }
             },
+            pnr_pm_vivian = {
+                name = "Vivian",
+                text = {
+                    "{C:money}Shade Fist:{} Click to spend {C:red}#2#{}",
+                    "discards, and for the rest of the blind,",
+                    "all played hands score",
+                    "{C:attention}#1#%{} of the required score.",
+                    "{C:blue}Veil:{} {C:red}-1{} discard when entering a",
+                    "{C:attention}Boss Blind{}, but {C:red}disables {C:attention}Boss Blinds{}.",
+                }
+            },
         },
     },
     misc = {
@@ -2604,6 +2634,10 @@ return {
             pm_levelup = "+1 Level",
             pm_levelup_ex = "Bonus Redeemed!",
             pm_battle_plus = "+1 Battle Card",
+            pm_activated = "Activated!",
+            pm_shade = "Burned!",
+            pm_fiery_jinx = "Extra Burn!",
+            pm_infatuate = "Infatuated!",
 
             -- Dry Bones
             pm_chips = "Chips",
